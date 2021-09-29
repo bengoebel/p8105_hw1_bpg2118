@@ -50,3 +50,38 @@ TRUE/FALSE values are converted to ones and zeroes, can be useful. The mean is
 equivalent to the proportion of TRUE values in the vector. The mean of a factor 
 vector makes no sense and serves no value.
 
+#### **Problem 2**
+
+Loading the penguins data.
+
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+The penguins data set contains information on penguins! This
+data set has `r nrow(penguins)` rows and `r ncol(penguins)` columns. This data 
+is collected in the following column names: `r colnames(penguins)`. The mean 
+flipper length is 
+`r format(round(mean(pull(penguins, flipper_length_mm), na.rm = TRUE), 2), nsmall = 2)` 
+mm. There are `r length(unique(pull(penguins, species)))` species, originating 
+from `r length(unique(pull(penguins, island)))` different islands. The data was
+collected from `r min(pull(penguins, year))` to `r max(pull(penguins, year))`.
+
+Here is the scatter plot of flipper_length_mm (y) vs. bill_length_mm (x) colored
+by species type.
+
+```{r warning=FALSE}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, 
+                     color = species)) +
+  geom_point() +
+  labs(x = "Bill Length (mm)",
+       y = "Flipper Length (mm)",
+       color = "Species") +
+  ggtitle("Flipper Length as a function of Bill Length stratified by Species")
+```
+
+Exporting the plot to pdf.
+```{r warning=FALSE, message=FALSE}
+ggsave("Problem_Two_Scatter_Plot.pdf")
+```
+
