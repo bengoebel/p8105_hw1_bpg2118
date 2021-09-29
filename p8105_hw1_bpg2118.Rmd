@@ -9,7 +9,8 @@ output: github_document
 library(tidyverse)
 ```
 
-#### **Problem 1**
+#### **Problem 1**  
+Here is the data frame.
 ```{r}
 # Create data frame per the specifications in problem one.
 problem_one_tibble <- tibble(
@@ -27,7 +28,10 @@ take the mean of the random normal sample and logical variables, which both
 resulted in numeric values. The output was NA with a warning message when I took 
 the mean of the character vector and factor variables.
 
+Next, I attempted to apply the as.numeric function to the logical, character
+and factor variables.
 ```{r results = "hide", warning = FALSE}
+# Convert variables to numeric
 as.numeric(pull(problem_one_tibble, greater_than_zero))
 as.numeric(pull(problem_one_tibble, meaningless_character_vector))
 as.numeric(pull(problem_one_tibble, three_level_factor))
@@ -58,11 +62,12 @@ Loading the penguins data.
 data("penguins", package = "palmerpenguins")
 ```
 
-The penguins data set contains information on penguins! This
-data set has `r nrow(penguins)` rows and `r ncol(penguins)` columns. This data 
-is collected in the following column names: `r colnames(penguins)`. The mean 
+The penguins data set contains biological information on penguins! This
+data set has `r nrow(penguins)` rows and `r ncol(penguins)` columns. The mean 
 flipper length is 
 `r format(round(mean(pull(penguins, flipper_length_mm), na.rm = TRUE), 2), nsmall = 2)` 
+mm. The mean bill length is 
+`r format(round(mean(pull(penguins, bill_length_mm), na.rm = TRUE), 2), nsmall = 2)`
 mm. There are `r length(unique(pull(penguins, species)))` species, originating 
 from `r length(unique(pull(penguins, island)))` different islands. The data was
 collected from `r min(pull(penguins, year))` to `r max(pull(penguins, year))`.
@@ -71,6 +76,7 @@ Here is the scatter plot of flipper_length_mm (y) vs. bill_length_mm (x) colored
 by species type.
 
 ```{r warning=FALSE}
+# Plot scatter plot with labels and title
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, 
                      color = species)) +
   geom_point() +
